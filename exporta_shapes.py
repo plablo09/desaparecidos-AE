@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
-
+#Toma los datos de desaparecidos y de rezago nunicipal de los csv's y exporta
+# los resultados como shapefiles
+#
+#
+#
 ##---(Wed Apr 15 18:12:49 2015)---
 from geopandas import GeoDataFrame
 import pandas as pd
-desaparecidos = pd.read_csv('data/desaparecidos.csv',header=0,names=['estado','municipio','cvegeo','year','total','tasa'], encoding='utf-8')
 desaparecidos = pd.read_csv('data/desaparecidos.csv',header=0,names=['estado','municipio','cvegeo','year','total','tasa'], encoding='utf-8')
 muns_time = desaparecidos.pivot('cvegeo','year','total')
 muns_time.head()
@@ -24,7 +27,6 @@ def completa_clave(x):
         return x
     
 rezago_muns['cve_txt'] = cve_str.apply(completa_clave)
-rezago_muns.rename(columns={'cve_txt':'cvegeo'})
 rezago_muns.rename(columns={'cve_txt':'cvegeo'},inplace=True)
 muns.rename(columns={'CVEGEO':'cvegeo'},inplace=True)
 muns_time.reset_index(inplace=True)
